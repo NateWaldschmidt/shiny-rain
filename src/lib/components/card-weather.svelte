@@ -1,7 +1,8 @@
 <script lang="ts">
     import getCoordinates      from '$lib/utilities/get-coordinates';
-    import getWeatherAPIStatus from '$lib/utilities/get-weather-api-status';
+    import getWeatherAPIStatus from '$lib/utilities/weather/get-weather-api-status';
     import getWeekDayString    from '$lib/utilities/get-day-string';
+    import getForecast         from '$lib/utilities/weather/get-forecast';
 
     /** The title of this weather card. */
     export const cardTitle = 'Weather this Week';
@@ -56,7 +57,7 @@
                 <p>Loading data for {city}, {state}...</p>
             {/await}
         {:else}
-            {#each weatherData.properties.periods as day}
+            {#each weatherData.properties.periods as day, index}
                 {#if day.isDaytime}
                     <ul id="forecast-list">
                         <li>
@@ -69,7 +70,7 @@
                                 {day.shortForecast}
                             </p>
                             <p class="sr-low-temp">
-                                {day.temperature} &#176;{day.temperatureUnit}
+                                {weatherData.properties.periods[index+1].temperature} &#176;{day.temperatureUnit} - {day.temperature} &#176;{day.temperatureUnit}
                             </p>
                             <!-- <p class="sr-high-temp">{day.temperature} &#176;F</p> -->
                         </li>
