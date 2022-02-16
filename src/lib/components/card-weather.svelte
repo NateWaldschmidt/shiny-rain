@@ -45,6 +45,7 @@
         weatherData = await weatherWeeklyRes.json();
     }
 
+    /** Used to dynamically update the page based on the results. */
     let weatherData: any;
 </script>
 
