@@ -1,6 +1,4 @@
 <script lang="ts">
-    import getCoordinates      from '$lib/utilities/get-coordinates';
-    import getWeatherAPIStatus from '$lib/utilities/weather/get-weather-api-status';
     import getWeekDayString    from '$lib/utilities/get-day-string';
     import getForecast         from '$lib/utilities/weather/get-forecast';
 
