@@ -3,13 +3,15 @@
  * the string formatted day of the week.
  * 
  * @author  Nathaniel Waldschmidt <Nathaniel.Waldsch@gmail.com>
- * @param   { string }  date   A date string that can be parsed by Date.parse().
+ * @param   { string }  date   A date string.
  * @param   { boolean } abbrev Whether to show this abbreviated or not (ie. 'Mon').
  * @returns { string }         The formatted day of the week.
  */
 export default function getWeekDayString(date: string, abbrev: boolean = false): string {
-    /** Formats as a date object to get the integer day of the week. */
-    const dateObj = new Date(Date.parse(date));
+    // Converts to Date object with proper timezone.
+    let dateObj = new Date(date);
+    const timezoneOffset = dateObj.getTimezoneOffset() * 60000;
+    dateObj = new Date(dateObj.getTime() + timezoneOffset);
 
     // Returns abbreviated version.
     if (abbrev) {
