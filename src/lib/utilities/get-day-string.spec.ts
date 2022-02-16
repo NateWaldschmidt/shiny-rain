@@ -2,10 +2,10 @@ import getWeekDayString from "./get-day-string";
 
 export default describe('get day string', () => {
     it('should be Sunday', () => {
-        expect(getWeekDayString('2/13/2022')).toBe('Sunday');
+        expect(getWeekDayString('2022-02-13')).toBe('Sunday');
     });
     it('should be Monday', () => {
-        expect(getWeekDayString('2/14/2022')).toBe('Monday');
+        expect(getWeekDayString('2-14-2022')).toBe('Monday');
     });
     it('should be Tuesday', () => {
         expect(getWeekDayString('2/15/2022')).toBe('Tuesday');
