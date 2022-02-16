@@ -11,7 +11,7 @@
     <header>
         <h1>Shiny Rain</h1>
 
-        <form on:submit|preventDefault={async() => await weatherCard.weekWeatherData()}>
+        <form on:submit|preventDefault={async() => await weatherCard.loadForecast()}>
             <label for="sr-city">
                 City/ Town
                 <input id="sr-city" type="text" bind:value={city} />

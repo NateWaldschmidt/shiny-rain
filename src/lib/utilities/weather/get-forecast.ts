@@ -1,6 +1,5 @@
 import getCoordinates         from "../get-coordinates";
 import weatherAPIStatus       from "./get-weather-api-status";
-import getDateObject          from "../get-date-object";
 import setMinMaxTemps         from "./set-temps";
 import setMinMaxApparentTemps from "./set-apparent-temps";
 import setPrecipChance        from "./set-precipitation-chances";
@@ -9,14 +8,14 @@ import setSnowfallAmounts from "./set-snowfall-amounts";
 /**
  * @author Nathaniel Waldschmidt <Nathaniel.Waldsch@gmail.com>
  */
-export default async function getForecast(): Promise<Map<number, any>> {
+export default async function getForecast(city: string, state: string): Promise<Map<number, any>> {
     let weatherData = undefined;
 
     // Ensures everything is gucci.
     await weatherAPIStatus();
 
     /** Object with properties lat and lon. */
-    const coords = await getCoordinates('Geneva', 'Illinois');
+    const coords = await getCoordinates(city, state);
 
     // Finds the weather grid associated with the lat and long.
     const weatherGridRes = await fetch(`https://api.weather.gov/points/${coords.lat},${coords.lon}`);
@@ -31,7 +30,6 @@ export default async function getForecast(): Promise<Map<number, any>> {
         throw new Error(`(${weatherWeeklyRes.status}) Weather API returned an error.`);
     }
     weatherData = await weatherWeeklyRes.json();
-    console.log(weatherData);
 
     // The map to return.
     let retWeatherData = new Map();
@@ -60,9 +58,5 @@ export default async function getForecast(): Promise<Map<number, any>> {
         value.maxApparentTemp = (value.maxApparentTemp * 1.8)+ 32;
     });
 
-    console.log(retWeatherData);
-
     return retWeatherData;
 }
-
-(async() => getForecast())();

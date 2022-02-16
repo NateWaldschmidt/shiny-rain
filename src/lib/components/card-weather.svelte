@@ -13,69 +13,35 @@
     /** The state we are searching for weather data from. */
     export let state = 'Illinois';
 
-    /**
-     * Does the API request for the weather data using
-     * the city and state props. This will return back
-     * one week of weather data.
-     * 
-     * @author  Nathaniel Waldschmidt <Nathaniel.Waldsch@gmail.com>
-     * @returns { object } The weather data from the API.
-     */
-    export async function weekWeatherData(): Promise<any> {
-        // Sets to undefined to show the loading part.
-        weatherData = undefined;
+    let forecastData: Map<number, any>;
 
-        // Ensures everything is gucci.
-        await getWeatherAPIStatus();
-
-        /** Object with properties lat and lon. */
-        const coords = await getCoordinates(city, state);
-
-        // Finds the weather grid associated with the lat and long.
-        const weatherGridRes = await fetch(`https://api.weather.gov/points/${coords.lat},${coords.lon}`);
-        if (weatherGridRes.status !== 200) {
-            throw new Error(`(${weatherGridRes.status}) Weather Grid API returned an error.`);
-        }
-        const weatherGridData = await weatherGridRes.json();
-
-        // Does the request for the forecast data.
-        const weatherWeeklyRes = await fetch(weatherGridData.properties.forecast);
-        if (weatherWeeklyRes.status !== 200) {
-            throw new Error(`(${weatherWeeklyRes.status}) Weather API returned an error.`);
-        }
-        weatherData = await weatherWeeklyRes.json();
+    export async function loadForecast(): Promise<void> {
+        // Sets to undefined to show the reload.
+        forecastData = undefined;
+        forecastData = await getForecast(city, state);
     }
-
-    /** Used to dynamically update the page based on the results. */
-    let weatherData: any;
 </script>
 
 <article id="card">
     <h2 id="card-title">7-Day Forecast</h2>
-        {#if weatherData == undefined}
-            {#await weekWeatherData()}
+        {#if forecastData == undefined}
+            {#await loadForecast()}
                 <p>Loading data for {city}, {state}...</p>
             {/await}
         {:else}
-            {#each weatherData.properties.periods as day, index}
-                {#if day.isDaytime}
-                    <ul id="forecast-list">
-                        <li>
-                            <p class="sr-datetime">
-                                <time datetime="{day.startTime}">
-                                    {getWeekDayString(day.startTime)}
-                                </time>
-                            </p>
-                            <p class="sr-conditions" data-day-time="{day.isDaytime}">
-                                {day.shortForecast}
-                            </p>
-                            <p class="sr-low-temp">
-                                {weatherData.properties.periods[index+1].temperature} &#176;{day.temperatureUnit} - {day.temperature} &#176;{day.temperatureUnit}
-                            </p>
-                            <!-- <p class="sr-high-temp">{day.temperature} &#176;F</p> -->
-                        </li>
-                    </ul>
-                {/if}
+            {#each [...forecastData] as [_, day]}
+                <ul id="forecast-list">
+                    <li>
+                        <p class="sr-datetime">
+                            <time datetime="{day.date}">
+                                {getWeekDayString(day.date)}
+                            </time>
+                        </p>
+                        <p class="sr-low-temp">
+                            {day.minTemp} &#176;F - {day.maxTemp} &#176;F
+                        </p>
+                    </li>
+                </ul>
             {/each}
         {/if}
 </article>
