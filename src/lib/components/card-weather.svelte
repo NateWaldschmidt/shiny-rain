@@ -27,6 +27,7 @@
                 <p>Loading data for {city}, {state}...</p>
             {/await}
         {:else}
+            {@debug forecastData}
             {#each [...forecastData] as [_, day]}
                 <ul id="forecast-list">
                     <li>
@@ -35,8 +36,9 @@
                                 {getWeekDayString(day.date)}
                             </time>
                         </p>
-                        <p class="sr-low-temp">
-                            {day.minTemp} &#176;F - {day.maxTemp} &#176;F
+                        <p class="sr-temps">
+                            <span class="sr-low-temp">L:{day.minTemp} &#176;F</span>
+                            <span class="sr-high-temp">H:{day.maxTemp} &#176;F</span>
                         </p>
                     </li>
                 </ul>
@@ -97,10 +99,18 @@
     .sr-datetime {
         width: 7rem;
     }
-    .sr-low-temp {
-        width: 7rem;
+    .sr-temps {
+        display: flex;
 
         text-align: right;
         font-weight: var(--font-weight-bold);
+    }
+    .sr-low-temp, .sr-high-temp {
+        width: 3.5rem;
+
+        text-align: left;
+    }
+    .sr-low-temp {
+        opacity: 0.75;
     }
 </style>
