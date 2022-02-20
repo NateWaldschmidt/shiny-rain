@@ -29,13 +29,13 @@ export default function setMinMaxTemps(weatherData: Map<number, any>, weatherJSO
         // Checks if this temp is lower than previously recorded min.
         const prevMinTemp = weatherData.get(dayNum).minTemp;
         if (!prevMinTemp || tempObj.value < prevMinTemp) {
-            weatherData.get(dayNum).minTemp = tempObj.value;
+            weatherData.get(dayNum).minTemp = Math.round(tempObj.value);
         }
 
         // Checks if this temp is high than previously record high.
         const prevMaxTemp = weatherData.get(dayNum).maxTemp;
         if (!prevMaxTemp || tempObj.value > prevMaxTemp) {
-            weatherData.get(dayNum).maxTemp = tempObj.value;
+            weatherData.get(dayNum).maxTemp = Math.round(tempObj.value);
         }
     });
 

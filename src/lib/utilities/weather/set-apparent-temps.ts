@@ -28,13 +28,13 @@ export default function setMinMaxApparentTemps(weatherData: Map<number, any>, we
         // Checks if this apparent temp is lower than the previously recorded min.
         const minApparentTemp = weatherData.get(dayNum).minApparentTemp
         if (!minApparentTemp || tempObj.value < minApparentTemp) {
-            weatherData.get(dayNum).minApparentTemp = tempObj.value;
+            weatherData.get(dayNum).minApparentTemp = Math.round(tempObj.value);
         }
 
         // Checks if this apparent temp is higher than the previously record high.
         const maxApparentTemp = weatherData.get(dayNum).maxApparentTemp
         if (!maxApparentTemp || tempObj.value > maxApparentTemp) {
-            weatherData.get(dayNum).maxApparentTemp = tempObj.value;
+            weatherData.get(dayNum).maxApparentTemp = Math.round(tempObj.value);
         }
     });
 
