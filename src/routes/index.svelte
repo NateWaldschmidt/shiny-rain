@@ -1,5 +1,6 @@
 <script lang="ts">
     import WeatherCard from '../lib/components/card-weather.svelte';
+    import WeatherTile from '../lib/components/tile-weather.svelte';
 
     let weatherCard: WeatherCard;
 
@@ -24,6 +25,12 @@
         </form>
     </header>
     <WeatherCard bind:this={weatherCard} bind:city={city} bind:state={state} />
+    <section class="container-tile">
+        <WeatherTile title="Rainfall" />
+        <WeatherTile title="Feels Like" />
+        <WeatherTile title="Humidity" />
+        <WeatherTile title="Visibility" />
+    </section>
 </main>
 
 <style lang="scss">
@@ -73,5 +80,14 @@
         margin: 0 0 0 0.5rem;
 
         font-size: 1.25rem;
+    }
+
+    .container-tile {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+
+        max-width: 810px;
+        margin: 2rem auto;
     }
 </style>
