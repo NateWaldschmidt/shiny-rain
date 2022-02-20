@@ -3,7 +3,8 @@ import weatherAPIStatus       from "./get-weather-api-status";
 import setMinMaxTemps         from "./set-temps";
 import setMinMaxApparentTemps from "./set-apparent-temps";
 import setPrecipChance        from "./set-precipitation-chances";
-import setSnowfallAmounts from "./set-snowfall-amounts";
+import setSnowfallAmounts     from "./set-snowfall-amounts";
+import celciusToFahrenheit    from "../celcius-to-fahrenheit";
 
 /**
  * @author Nathaniel Waldschmidt <Nathaniel.Waldsch@gmail.com>
@@ -52,10 +53,10 @@ export default async function getForecast(city: string, state: string): Promise<
     // Conversions.
     retWeatherData.forEach((value: any) => {
         // Converts to fahrenheit.
-        value.minTemp = Math.round((value.minTemp * 1.8)+ 32);
-        value.maxTemp = Math.round((value.maxTemp * 1.8)+ 32);
-        value.minApparentTemp = Math.round((value.minApparentTemp * 1.8)+ 32);
-        value.maxApparentTemp = Math.round((value.maxApparentTemp * 1.8)+ 32);
+        value.minTemp = celciusToFahrenheit(value.minTemp);
+        value.maxTemp = celciusToFahrenheit(value.maxTemp);
+        value.minApparentTemp = celciusToFahrenheit(value.minApparentTemp);
+        value.maxApparentTemp = celciusToFahrenheit(value.maxApparentTemp);
     });
 
     return retWeatherData;
