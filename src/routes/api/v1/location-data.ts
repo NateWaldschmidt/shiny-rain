@@ -1,5 +1,23 @@
 import type { RequestHandler } from "@sveltejs/kit";
 
+export interface LocationData {
+    Key: number,
+    Type: string,
+    CityName: string,
+    PostalCode: string,
+    RegionName: string,
+    CountryName: string,
+    AdministrativeArea: {
+        Type: string,
+        NameAbbreviated: string,
+        Name: string,
+    },
+    GeoPosition: {
+        Latitude: number,
+        Longitude: number
+    },
+}
+
 /**
  * Makes the API request to AccuWeather to get 
  * location information, primarily the 
