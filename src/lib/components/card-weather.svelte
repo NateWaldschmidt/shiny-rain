@@ -27,7 +27,6 @@
                 <p>Loading data for {city}, {state}...</p>
             {/await}
         {:else}
-            {@debug forecastData}
             {#each [...forecastData] as [_, day]}
                 <ul id="forecast-list">
                     <li>
