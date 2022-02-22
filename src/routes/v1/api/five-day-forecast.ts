@@ -13,7 +13,7 @@ export const get: RequestHandler = async(event) => {
     return {
         status: 200,
         body: {
-            resultsJSON
+            results: resultsJSON
         }
     }
 }
